@@ -3,3 +3,4 @@ config.yaml
 __pycache__
 .DS_Store
 data/
+config-production.yaml
