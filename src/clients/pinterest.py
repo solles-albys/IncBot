@@ -1,5 +1,8 @@
-from random import choice
-from lib.client import BaseClient
+from random import choice, randint
+from lib.client import BaseClient, Params
+
+import asyncio
+from pyppeteer import launch
 
 
 class PinterestShuffle(BaseClient):
@@ -41,6 +44,7 @@ class Pinterest(BaseClient):
     
     def __init__(self):
         super().__init__()
+        
     
     async def get_pin_image_url(self, url: str) -> str:
         resp = await self.get(url)
@@ -52,4 +56,48 @@ class Pinterest(BaseClient):
         end = text.find('"', img_start)
         img = text[img_start:end]
         return img
+    
+    async def get_search_url(self, search: str, rand=False) -> str:
+        found = False
+        for s in 'mem meme мем'.split():
+            if s in search:
+                found = True
+                break
+        
+        if not found:
+            search = f'мем {search}'
+
+        url = f'https://ru.pinterest.com/search/pins/?q={search.replace(" ", "%20")}&ts=typed'
+        
+        browser = await launch(headless=True)
+        page = await browser.newPage()
+        await page.setViewport({
+            'width': 1000,
+            'height': 1500
+        })
+        await page.goto(url, options={'waitUntil': 'networkidle2'})
+        
+        text = await page.content()
+        await browser.close()
+        
+        look_for = 'href="/pin/'
+        if rand:
+            skip = randint(1, 50)
+        else:
+            skip = 1
+
+        last_end = 0
+        
+        last_url = ''
+        for _ in range(skip):
+            pos = text.find(look_for, last_end)
+            if pos == -1:
+                break
+
+            pos += len('href="')
+            end = text.find('"', pos)
             
+            last_end = end
+            last_url = text[pos:end]
+        
+        return await self.get_pin_image_url(f'https://ru.pinterest.com{last_url}')
