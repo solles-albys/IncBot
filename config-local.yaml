@@ -1,0 +1,31 @@
+development: true
+timezone: 'Europe/Moscow'
+
+bot:
+  token: 
+  name: 
+  polling_mode: true
+
+modules:
+  - src.modules.Anime
+  - src.modules.Pwd
+  - src.modules.Meme
+  
+web:
+  port: 80
+  host: 0.0.0.0
+
+clients:
+  pinterest:
+    url: 
+    cookie: 
+
+logging:
+  loggers:
+    - modules
+    - http-client
+    - utils
+    - uvicorn
+    - bot
+
+

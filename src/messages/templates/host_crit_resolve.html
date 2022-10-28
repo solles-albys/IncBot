@@ -1,0 +1,15 @@
+🍺 {{ state.value }}
+{% if tags %}{%for tag in tags %}#{{ tag }} {% endfor %}{%-endif-%}
+{%- if summary %}
+<b>{{summary}}</b>
+{%- endif -%}
+{%- if description %}
+<i>{{description}}</i>
+{%- endif %}
+
+value: {{ value }}
+{%- if labels -%}
+{%- for key, val in labels.items() %}
+{{ key }}: <code>{{val}}</code>
+{%- endfor -%}
+{%- endif -%}
