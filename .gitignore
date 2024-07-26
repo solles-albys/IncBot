@@ -3,4 +3,5 @@ config.yaml
 __pycache__
 .DS_Store
 data/
+venv/
 config-production.yaml
