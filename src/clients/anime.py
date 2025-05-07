@@ -1,22 +1,12 @@
-from io import BytesIO
-from urllib import request
 from lib.client import BaseClient
 
-
-
 class Anime(BaseClient):
-    base_url: str = 'https://animepicsx.net'
+    base_url: str = 'https://pic.re'
     
     async def get_rand_girl(self) -> str:
         """Returns url to the random anime girl picture"""
         
-        resp = await self.get('/random')
-        text = await resp.text()
+        resp = await self.post('/image')
+        metadata = await resp.json()
         
-        ind = text.find('href="/random" class="_random_pic">')
-        text = text[ind:ind+150]
-
-        url = text[text.find("https://"):text.find('" class="z-dep')]
-        return url
-        
-        
+        return metadata['file_url']

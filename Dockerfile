@@ -1,4 +1,4 @@
-FROM python:3.10-alpine
+FROM python:3.11-slim
 
 RUN mkdir /app
 WORKDIR /app
@@ -8,9 +8,9 @@ ENV PYTHONPATH /app
 
 ADD requirements.txt /app/requirements.txt
 
-RUN pip3.10 install -r requirements.txt --no-cache-dir
+RUN pip3.11 install -r requirements.txt --no-cache-dir
 
 COPY . /app
 
 EXPOSE 80
-CMD python3.10 /app/main.py --config config-production.yaml
+CMD python3.11 /app/main.py --config config-production.yaml

@@ -1,6 +1,5 @@
 from src.clients import anime
 from src.modules.base import BaseModule, Command, Match
-from lib.client import BaseClient
 from src.context import Context
 from src.bot.chat import Chat
 
