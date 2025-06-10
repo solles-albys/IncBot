@@ -1,0 +1,13 @@
+---
+
+services:
+  animeincbot:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - animeincbot_offset:/var/www/animeincbot
+
+volumes:
+  animeincbot_offset:
+    driver: local
